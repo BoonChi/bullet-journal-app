@@ -1,0 +1,11 @@
+textarea {
+  width: 100%;
+}
+
+.button {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #24a0ed;
+  border-radius: 5px;
+  padding: 5px;
+}
