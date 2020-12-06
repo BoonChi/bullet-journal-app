@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import BulletTable from "../table/BulletTable";
-import "./DailyLog.css";
 import { FaCalendarPlus } from "react-icons/fa";
 import ModalPop from "../modal/ModalPop";
-
-const DailyLog: React.FC = () => {
+import capitaliseFirstLetter from "../../utils/commonFunction";
+import "./Page.css";
+type Props = {
+  type: string;
+};
+const Page: React.FC<Props> = ({ type }) => {
   const [show, setShow] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const handleClose = () => {
@@ -13,13 +16,15 @@ const DailyLog: React.FC = () => {
   const handleOpen = () => {
     setShow(true);
   };
+  const getProp = () => {
+    setRefresh(false);
+  };
   return (
     <div>
       <div className="headerBar">
-        <div className="headerTitle">Daily Log</div>
+        <div className="headerTitle">{capitaliseFirstLetter(type)} Log</div>
         <div className="addNew">
           <FaCalendarPlus onClick={handleOpen} />
-          {console.log("refresh and show", refresh, show)}
           {show ? (
             <ModalPop
               show={show}
@@ -28,14 +33,18 @@ const DailyLog: React.FC = () => {
                 setShow(false);
                 setRefresh(true);
               }}
-              type={"daily"}
+              type={type}
             ></ModalPop>
           ) : null}
         </div>
       </div>
-      <BulletTable refresh={refresh}></BulletTable>
+      <BulletTable
+        refresh={refresh}
+        logType={type}
+        sendProp={getProp}
+      ></BulletTable>
     </div>
   );
 };
 
-export default DailyLog;
+export default Page;

@@ -7,17 +7,15 @@ import {
   Nav,
   NavItem,
   NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
 } from "reactstrap";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import MainContent from "../mainContent/MainContent";
-import DailyLog from "../dailyLog/DailyLog";
-import MonthlyLog from "../monthlyLog/MonthlyLog";
-import FutureLog from "../futureLog/FutureLog";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  NavLink as RRNavLink,
+} from "react-router-dom";
+import Page from "../pages/Page";
 const NavbarMenu: React.FC = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,19 +23,39 @@ const NavbarMenu: React.FC = (props) => {
   return (
     <Router>
       <div>
-        <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Bullet Journal</NavbarBrand>
+        <Navbar color="dark" dark expand="md">
+          <NavbarBrand to="/" activeClassName="active" exact tag={RRNavLink}>
+            Bullet Journal
+          </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
               <NavItem>
-                <NavLink href="/dailyLog/">Daily Log</NavLink>
+                <NavLink
+                  to="/dailyLog/"
+                  activeClassName="active"
+                  tag={RRNavLink}
+                >
+                  Daily Log
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/monthlyLog/">Monthly Log</NavLink>
+                <NavLink
+                  to="/monthlyLog/"
+                  activeClassName="active"
+                  tag={RRNavLink}
+                >
+                  Monthly Log
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/futureLog/">Future Log</NavLink>
+                <NavLink
+                  to="/futureLog/"
+                  activeClassName="active"
+                  tag={RRNavLink}
+                >
+                  Future Log
+                </NavLink>
               </NavItem>
             </Nav>
             <NavbarText>Sign Up</NavbarText>
@@ -45,16 +63,16 @@ const NavbarMenu: React.FC = (props) => {
         </Navbar>
         <Switch>
           <Route path="/dailyLog">
-            <DailyLog />
+            <Page type="daily" />
           </Route>
           <Route path="/monthlyLog">
-            <MonthlyLog />
+            <Page type="monthly" />
           </Route>
           <Route path="/futureLog">
-            <FutureLog />
+            <Page type="future" />
           </Route>
-          <Route path="/">
-            <MainContent />
+          <Route exact path="/">
+            <Page type="" />
           </Route>
         </Switch>
       </div>

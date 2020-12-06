@@ -1,11 +1,11 @@
 import React from "react";
 //import "./App.css";
 import "react-bootstrap";
-import Home from "./components/home/Home";
+import NavbarMenu from "./components/navbar/NavbarMenu";
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Home></Home>
+      <NavbarMenu></NavbarMenu>
     </div>
   );
 };

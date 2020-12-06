@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const logSchema = require("../models/logSchema")
 mongoose.connect('mongodb://admin:password@localhost:27017/mydb?authSource=admin', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 console.log(mongoose.connection.readyState);
-
-/* GET log listing. */
+/* GET all log listing. */
 router.get('/', function (req, res, next) {
     logSchema.find({})
         .exec(function (err, logs) {
@@ -17,13 +16,28 @@ router.get('/', function (req, res, next) {
             }
         });
 });
+
+/* GET specific log listing. */
+router.get('/:type', function (req, res, next) {
+    console.log(req.params, "get thru logType")
+    logSchema.find(req.params)
+        .exec(function (err, logs) {
+            if (err) {
+                console.log(err);
+                res.json(err);
+            } else {
+                res.json(logs);
+            }
+        });
+});
 /* POST log listing. */
 router.post('/', function (req, res, next) {
-    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration }, function (err, data) {
+    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark }, function (err, data) {
         if (err) return handleError(err);
         // saved!
-        data.save(function (err) {
+        data.save(function (err, logs) {
             if (err) return handleError(err); // saved!
+            res.json(logs);
         });
     });
 });
@@ -32,23 +46,31 @@ router.post('/', function (req, res, next) {
 router.delete('/', function (req, res, next) {
     logSchema.findByIdAndRemove(req.body.id, function (err, data) {
         if (err) return handleError(err);
+        res.json(data);
     });
 });
 
 /* edit log. */
 router.put('/', function (req, res, next) {
-    const update = {
-        details: req.body.details,
-        duration: req.body.duration,
-        type: req.body.type
+    let update = null
+    if (req.body.details && req.body.duration && req.body.type) {
+        update = {
+            details: req.body.details,
+            duration: req.body.duration,
+            type: req.body.type
+        }
+    } else {
+        update = {
+            mark: req.body.mark
+        }
     }
-    console.log("edit route")
+    console.log("edit route", update)
     logSchema.findByIdAndUpdate(req.body.id, update, function (err, data) {
         if (err) return handleError(err);
         // saved!
         data.save(function (err, callback) {
             if (err) return handleError(err); // saved!
-            console.log(callback)
+            res.json(callback)
         });
     });
 });

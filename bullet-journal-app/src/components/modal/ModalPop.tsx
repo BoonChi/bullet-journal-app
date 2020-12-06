@@ -32,10 +32,11 @@ const ModalPop: React.FC<Props> = ({
     };
     if (!dataId) {
       //add
-      await API.post("http://localhost:9000/logs/", {
+      await API.post("logs/", {
         details: target.details.value,
         duration: target.duration.value,
         type: target.type.value,
+        mark: false,
       })
         .then(function (response) {
           //update latest table
@@ -46,7 +47,7 @@ const ModalPop: React.FC<Props> = ({
           console.log(error);
         });
     } else {
-      await API.put("http://localhost:9000/logs/", {
+      await API.put("logs/", {
         details: target.details.value,
         duration: target.duration.value,
         id: dataId,
