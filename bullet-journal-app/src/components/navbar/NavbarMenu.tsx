@@ -25,7 +25,7 @@ const NavbarMenu: React.FC = (props) => {
       <div>
         <Navbar color="dark" dark expand="md">
           <NavbarBrand to="/" activeClassName="active" exact tag={RRNavLink}>
-            Bullet Journal
+            Logs
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
@@ -58,7 +58,7 @@ const NavbarMenu: React.FC = (props) => {
                 </NavLink>
               </NavItem>
             </Nav>
-            <NavbarText>Sign Up</NavbarText>
+            <NavbarText>Bullet Journal</NavbarText>
           </Collapse>
         </Navbar>
         <Switch>

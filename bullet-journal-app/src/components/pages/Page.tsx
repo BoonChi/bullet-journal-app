@@ -22,7 +22,9 @@ const Page: React.FC<Props> = ({ type }) => {
   return (
     <div>
       <div className="headerBar">
-        <div className="headerTitle">{capitaliseFirstLetter(type)} Log</div>
+        <div className="headerTitle">
+          {type ? capitaliseFirstLetter(type) + " Log" : "Logs"}
+        </div>
         <div className="addNew">
           <FaCalendarPlus onClick={handleOpen} />
           {show ? (
