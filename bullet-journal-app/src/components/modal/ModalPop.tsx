@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import "./ModalPop.css";
 import API from "../../utils/API";
+import Constant from "../../Constant";
 
 type Props = {
   show?: boolean;
@@ -11,6 +12,7 @@ type Props = {
   details?: string;
   duration?: number;
   dataId?: string;
+  itemType?: string;
 };
 
 const ModalPop: React.FC<Props> = ({
@@ -21,6 +23,7 @@ const ModalPop: React.FC<Props> = ({
   details,
   duration,
   dataId,
+  itemType,
 }) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     onSubmit && onSubmit();
@@ -29,6 +32,7 @@ const ModalPop: React.FC<Props> = ({
       details: { value: string };
       duration: { value: number };
       type: { value: string };
+      itemType: { value: string };
     };
     if (!dataId) {
       //add
@@ -69,6 +73,22 @@ const ModalPop: React.FC<Props> = ({
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <div>
+            <label style={{ marginBottom: 10 }}>Item types</label>
+          </div>
+          <div>
+            <select
+              style={{ marginBottom: 10 }}
+              name="itemType"
+              defaultValue={itemType}
+            >
+              {Constant.itemTypeOptions.map((itemTypeOption) => (
+                <option value={itemTypeOption.value}>
+                  {itemTypeOption.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
             <label>Details</label>
           </div>
           <textarea name="details" defaultValue={details} />
@@ -84,9 +104,11 @@ const ModalPop: React.FC<Props> = ({
 
           <div>
             <select name="type" defaultValue={type}>
-              <option value="daily">Daily</option>
-              <option value="monthly">Monthly</option>
-              <option value="future">Future</option>
+              {Constant.logTypeOptions.map((logTypeOption) => (
+                <option value={logTypeOption.value}>
+                  {logTypeOption.label}
+                </option>
+              ))}
             </select>
           </div>
           <Button className="button" variant="primary" type="submit">

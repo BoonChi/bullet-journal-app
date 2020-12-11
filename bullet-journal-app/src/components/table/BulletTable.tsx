@@ -13,6 +13,7 @@ interface displayData {
   _id: string;
   type: string;
   mark: Boolean;
+  itemType: string;
 }
 type Props = {
   refresh: Boolean;
@@ -31,6 +32,7 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
     duration: 1,
     details: "",
     _id: "",
+    itemType: "",
   });
   const deleteData = async (param: string) => {
     await API.delete("logs/", { data: { id: param } })
@@ -112,9 +114,10 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
       <Table>
         <thead>
           <tr>
+            <th>Type</th>
             <th>Title</th>
-            <th>Duration</th>
             <th>Details</th>
+            <th>Duration</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -122,9 +125,10 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
           {console.log(responseData)}
           {responseData.map((row: displayData) => (
             <tr key={row._id} className={row.mark ? "strikeThrough" : ""}>
+              <td>{row.itemType}</td>
               <td>{capitaliseFirstLetter(row.type)} Log</td>
-              <td>{row.duration}</td>
               <td>{row.details}</td>
+              <td>{row.duration}</td>
               <td>
                 <Button
                   className="actionButton"
@@ -165,6 +169,7 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
             duration={editData?.duration}
             dataId={editData?._id}
             type={editData?.type}
+            itemType={editData?.itemType}
           ></ModalPop>
         ) : null}
       </div>
