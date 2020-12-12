@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "./ModalPop.css";
 import API from "../../utils/API";
@@ -13,8 +13,8 @@ type Props = {
   duration?: number;
   dataId?: string;
   itemType?: string;
+  date?: number;
 };
-
 const ModalPop: React.FC<Props> = ({
   show,
   onHide,
@@ -24,7 +24,37 @@ const ModalPop: React.FC<Props> = ({
   duration,
   dataId,
   itemType,
+  date,
 }) => {
+  const [dateOption, setDateOption] = useState([] as any);
+  const handleTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const data: number[] = [];
+    switch (event.currentTarget.value) {
+      case "daily":
+        //state day
+        for (let i = 1; i <= 31; i++) {
+          data.push(i);
+        }
+        setDateOption(data);
+        break;
+      case "monthly":
+        //state month
+        for (let i = 1; i <= 12; i++) {
+          data.push(i);
+        }
+        setDateOption(data);
+        break;
+      case "future":
+        //state year
+        data.push(2021);
+        data.push(2022);
+        data.push(2023);
+        setDateOption(data);
+        break;
+      default:
+      //state day
+    }
+  };
   const handleSubmit = async (e: React.SyntheticEvent) => {
     onSubmit && onSubmit();
     e.preventDefault();
@@ -33,6 +63,7 @@ const ModalPop: React.FC<Props> = ({
       duration: { value: number };
       type: { value: string };
       itemType: { value: string };
+      date: { value: number };
     };
     if (!dataId) {
       //add
@@ -41,6 +72,8 @@ const ModalPop: React.FC<Props> = ({
         duration: target.duration.value,
         type: target.type.value,
         mark: false,
+        itemType: target.itemType.value,
+        date: target.date.value,
       })
         .then(function (response) {
           //update latest table
@@ -56,6 +89,8 @@ const ModalPop: React.FC<Props> = ({
         duration: target.duration.value,
         id: dataId,
         type: target.type.value,
+        itemType: target.itemType.value,
+        date: target.date.value,
       })
         .then(function (response) {
           //update the list
@@ -103,12 +138,35 @@ const ModalPop: React.FC<Props> = ({
           </div>
 
           <div>
-            <select name="type" defaultValue={type}>
+            <select
+              style={{ marginBottom: 10 }}
+              name="type"
+              defaultValue={type}
+              onChange={handleTypeChange}
+            >
               {Constant.logTypeOptions.map((logTypeOption) => (
                 <option value={logTypeOption.value}>
                   {logTypeOption.label}
                 </option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label style={{ marginBottom: 10 }}>Date</label>
+          </div>
+          <div>
+            <select
+              style={{ marginBottom: 10 }}
+              name="date"
+              defaultValue={date}
+            >
+              {dateOption.length > 0
+                ? dateOption.map((option: number | undefined) => (
+                    <option value={option}>{option}</option>
+                  ))
+                : Constant.daysNumber.map((day: number) => (
+                    <option value={day}>{day}</option>
+                  ))}
             </select>
           </div>
           <Button className="button" variant="primary" type="submit">

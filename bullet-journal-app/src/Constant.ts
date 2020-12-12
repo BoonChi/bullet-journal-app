@@ -27,5 +27,9 @@ const logTypeOptions = [
         value: "future",
     },
 ];
+const daysNumber: number[] = []
+for (let i = 1; i <= 31; i++) {
+    daysNumber.push(i);
+}
 
-export default {itemTypeOptions, logTypeOptions};
+export default {itemTypeOptions, logTypeOptions, daysNumber};

@@ -6,7 +6,8 @@ var logSchema = new Schema({
     details: String,
     duration: Number,
     mark: Boolean,
-    itemType: String
+    itemType: String,
+    date: Number
 }, { collection: 'bulletJournal' });
 
 module.exports = mongoose.model('log', logSchema);

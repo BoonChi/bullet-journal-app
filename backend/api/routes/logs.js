@@ -31,7 +31,7 @@ router.get('/:type', function (req, res, next) {
 });
 /* POST log listing. */
 router.post('/', function (req, res, next) {
-    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark, itemType: req.body.itemType }, function (err, data) {
+    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark, itemType: req.body.itemType, date: req.body.date }, function (err, data) {
         if (err) return handleError(err);
         // saved!
         data.save(function (err, logs) {
@@ -52,12 +52,14 @@ router.delete('/', function (req, res, next) {
 /* edit log. */
 router.put('/', function (req, res, next) {
     let update = null
-    if (req.body.details && req.body.duration && req.body.type) {
+    if (req.body.details && req.body.type) {
         update = {
             details: req.body.details,
             duration: req.body.duration,
             type: req.body.type,
-            itemType: req.body.itemType
+            itemType: req.body.itemType,
+            date: req.body.date
+
         }
     } else {
         update = {

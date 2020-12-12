@@ -14,6 +14,7 @@ interface displayData {
   type: string;
   mark: Boolean;
   itemType: string;
+  date: number;
 }
 type Props = {
   refresh: Boolean;
@@ -33,7 +34,20 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
     details: "",
     _id: "",
     itemType: "",
+    date: 1,
   });
+  const renderSwitch = () => {
+    switch (logType) {
+      case "daily":
+        return "Day";
+      case "monthly":
+        return "Month";
+      case "future":
+        return "Year";
+      default:
+      //
+    }
+  };
   const deleteData = async (param: string) => {
     await API.delete("logs/", { data: { id: param } })
       .then(function (response) {})
@@ -115,6 +129,7 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
         <thead>
           <tr>
             <th>Type</th>
+            {logType ? <th>{renderSwitch()}</th> : null}
             <th>Title</th>
             <th>Details</th>
             <th>Duration</th>
@@ -125,7 +140,12 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
           {console.log(responseData)}
           {responseData.map((row: displayData) => (
             <tr key={row._id} className={row.mark ? "strikeThrough" : ""}>
-              <td>{row.itemType}</td>
+              {logType ? (
+                <td>
+                  {row.itemType ? capitaliseFirstLetter(row.itemType) : null}
+                </td>
+              ) : null}
+              <td>{row.date}</td>
               <td>{capitaliseFirstLetter(row.type)} Log</td>
               <td>{row.details}</td>
               <td>{row.duration}</td>
