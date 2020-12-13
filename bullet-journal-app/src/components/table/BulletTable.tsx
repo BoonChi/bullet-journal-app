@@ -6,22 +6,32 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import ModalPop from "../modal/ModalPop";
 import capitaliseFirstLetter from "../../utils/commonFunction";
+import { BsFillTrashFill } from "react-icons/bs";
+import { BiEdit, BiCheckCircle } from "react-icons/bi";
 
 interface displayData {
   duration: number;
   details: string;
   _id: string;
-  type: string;
+  type: "daily" | "monthly" | "future";
   mark: Boolean;
   itemType: string;
-  date: number;
+  day: number;
+  month: number;
+  year: number;
 }
 type Props = {
   refresh: Boolean;
   logType: string;
   sendProp: () => void;
+  currentDate: string;
 };
-const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
+const BulletTable: React.FC<Props> = ({
+  refresh,
+  logType,
+  sendProp,
+  currentDate,
+}) => {
   const [showEdit, setShowEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleCloseEdit = () => {
@@ -29,12 +39,14 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
   };
   let [responseData, setResponseData] = useState([]);
   let [editData, setEditData] = useState({
-    type: "",
+    type: "daily" as "daily" | "monthly" | "future",
     duration: 1,
     details: "",
     _id: "",
     itemType: "",
-    date: 1,
+    day: 1,
+    month: 1,
+    year: 1,
   });
   const renderSwitch = () => {
     switch (logType) {
@@ -111,8 +123,8 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
 
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    console.log(logType);
-    API.get("logs/" + logType)
+    console.log(logType, currentDate);
+    API.get("logs/" + logType + "/" + currentDate)
       .then((response) => {
         console.log("callbackend", response.data);
         setResponseData(response.data);
@@ -121,7 +133,7 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
         setLoading(false);
         sendProp && sendProp();
       });
-  }, [loading, refresh, logType]);
+  }, [loading, refresh, logType, currentDate]);
 
   return (
     <div>
@@ -132,7 +144,7 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
             {logType ? <th>{renderSwitch()}</th> : null}
             <th>Title</th>
             <th>Details</th>
-            <th>Duration</th>
+            {logType ? <th>Duration(hr)</th> : null}
             <th>Action</th>
           </tr>
         </thead>
@@ -145,32 +157,31 @@ const BulletTable: React.FC<Props> = ({ refresh, logType, sendProp }) => {
                   {row.itemType ? capitaliseFirstLetter(row.itemType) : null}
                 </td>
               ) : null}
-              <td>{row.date}</td>
+              <td>
+                {row.day}/{row.month}/{row.year}
+              </td>
               <td>{capitaliseFirstLetter(row.type)} Log</td>
               <td>{row.details}</td>
-              <td>{row.duration}</td>
+              {logType ? <td>{row.duration}</td> : null}
               <td>
-                <Button
+                <BsFillTrashFill
                   className="actionButton"
-                  variant="outline-danger"
                   onClick={() => deleteOperation(row._id)}
                 >
                   DELETE
-                </Button>
-                <Button
+                </BsFillTrashFill>
+                <BiEdit
                   className="actionButton"
-                  variant="outline-primary"
                   onClick={() => editOperation(row)}
                 >
                   EDIT
-                </Button>
-                <Button
+                </BiEdit>
+                <BiCheckCircle
                   className="actionButton"
-                  variant="outline-success"
                   onClick={() => markedLog(row)}
                 >
                   {row.mark ? "UNDONE" : "DONE"}
-                </Button>
+                </BiCheckCircle>
               </td>
             </tr>
           ))}

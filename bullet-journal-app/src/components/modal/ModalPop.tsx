@@ -3,17 +3,20 @@ import { Button, Modal } from "react-bootstrap";
 import "./ModalPop.css";
 import API from "../../utils/API";
 import Constant from "../../Constant";
+import { sign } from "crypto";
 
 type Props = {
   show?: boolean;
   onHide?: () => void;
   onSubmit?: () => void;
-  type?: string;
+  type: "daily" | "monthly" | "future";
   details?: string;
   duration?: number;
   dataId?: string;
   itemType?: string;
-  date?: number;
+  day?: number;
+  month?: number;
+  year?: number;
 };
 const ModalPop: React.FC<Props> = ({
   show,
@@ -24,7 +27,9 @@ const ModalPop: React.FC<Props> = ({
   duration,
   dataId,
   itemType,
-  date,
+  day,
+  month,
+  year,
 }) => {
   const [dateOption, setDateOption] = useState([] as any);
   const handleTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -63,8 +68,11 @@ const ModalPop: React.FC<Props> = ({
       duration: { value: number };
       type: { value: string };
       itemType: { value: string };
-      date: { value: number };
+      day: { value: number };
+      month: { value: number };
+      year: { value: number };
     };
+    console.log("target", target);
     if (!dataId) {
       //add
       await API.post("logs/", {
@@ -73,7 +81,9 @@ const ModalPop: React.FC<Props> = ({
         type: target.type.value,
         mark: false,
         itemType: target.itemType.value,
-        date: target.date.value,
+        day: target.day ? target.day.value : null,
+        month: target.month ? target.month.value : null,
+        year: target.year ? target.year.value : null,
       })
         .then(function (response) {
           //update latest table
@@ -90,7 +100,9 @@ const ModalPop: React.FC<Props> = ({
         id: dataId,
         type: target.type.value,
         itemType: target.itemType.value,
-        date: target.date.value,
+        day: target.day ? target.day.value : null,
+        month: target.month ? target.month.value : null,
+        year: target.year ? target.year.value : null,
       })
         .then(function (response) {
           //update the list
@@ -152,13 +164,13 @@ const ModalPop: React.FC<Props> = ({
             </select>
           </div>
           <div>
-            <label style={{ marginBottom: 10 }}>Date</label>
+            <label style={{ marginBottom: 10 }}>Set Date</label>
           </div>
           <div>
             <select
               style={{ marginBottom: 10 }}
-              name="date"
-              defaultValue={date}
+              name={Constant.dateType[type]}
+              defaultValue={day}
             >
               {dateOption.length > 0
                 ? dateOption.map((option: number | undefined) => (

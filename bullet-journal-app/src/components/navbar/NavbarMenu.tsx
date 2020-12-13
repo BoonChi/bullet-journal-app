@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Collapse,
   Navbar,
@@ -71,9 +72,9 @@ const NavbarMenu: React.FC = (props) => {
           <Route path="/futureLog">
             <Page type="future" />
           </Route>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             <Page type="" />
-          </Route>
+          </Route> */}
         </Switch>
       </div>
     </Router>

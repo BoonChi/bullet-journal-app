@@ -18,7 +18,8 @@ router.get('/', function (req, res, next) {
 });
 
 /* GET specific log listing. */
-router.get('/:type', function (req, res, next) {
+router.get('/:type/:day/:month/:year', function (req, res, next) {
+    console.log(req.params)
     logSchema.find(req.params)
         .exec(function (err, logs) {
             if (err) {
@@ -31,7 +32,7 @@ router.get('/:type', function (req, res, next) {
 });
 /* POST log listing. */
 router.post('/', function (req, res, next) {
-    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark, itemType: req.body.itemType, date: req.body.date }, function (err, data) {
+    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark, itemType: req.body.itemType, day: req.body.day, month: req.body.month, year: req.body.year }, function (err, data) {
         if (err) return handleError(err);
         // saved!
         data.save(function (err, logs) {
@@ -58,7 +59,9 @@ router.put('/', function (req, res, next) {
             duration: req.body.duration,
             type: req.body.type,
             itemType: req.body.itemType,
-            date: req.body.date
+            day: req.body.day,
+            month: req.body.month,
+            year: req.body.year
 
         }
     } else {

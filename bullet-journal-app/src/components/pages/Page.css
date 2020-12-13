@@ -19,3 +19,8 @@
   padding: 10px 0px;
   cursor: pointer;
 }
+
+.row {
+  flex-wrap: nowrap;
+  margin-left: 2px;
+}

@@ -4,12 +4,14 @@ import { FaCalendarPlus } from "react-icons/fa";
 import ModalPop from "../modal/ModalPop";
 import capitaliseFirstLetter from "../../utils/commonFunction";
 import "./Page.css";
+import CalendarLog from "../calendar/CalendarLog";
 type Props = {
-  type: string;
+  type: "daily" | "monthly" | "future";
 };
 const Page: React.FC<Props> = ({ type }) => {
   const [show, setShow] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [currentDate, setCurrentDate] = useState("");
   const handleClose = () => {
     setShow(false);
   };
@@ -18,6 +20,9 @@ const Page: React.FC<Props> = ({ type }) => {
   };
   const getProp = () => {
     setRefresh(false);
+  };
+  const getSelectedDate = (data: string) => {
+    setCurrentDate(data);
   };
   return (
     <div>
@@ -40,11 +45,15 @@ const Page: React.FC<Props> = ({ type }) => {
           ) : null}
         </div>
       </div>
-      <BulletTable
-        refresh={refresh}
-        logType={type}
-        sendProp={getProp}
-      ></BulletTable>
+      <div className="row">
+        <CalendarLog parentCallback={getSelectedDate}></CalendarLog>
+        <BulletTable
+          refresh={refresh}
+          logType={type}
+          sendProp={getProp}
+          currentDate={currentDate}
+        ></BulletTable>
+      </div>
     </div>
   );
 };

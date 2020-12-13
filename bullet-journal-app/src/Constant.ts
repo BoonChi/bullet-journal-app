@@ -32,4 +32,9 @@ for (let i = 1; i <= 31; i++) {
     daysNumber.push(i);
 }
 
-export default {itemTypeOptions, logTypeOptions, daysNumber};
+const dateType = {
+    "daily": "day",
+    "monthly": "month",
+    "future": "year"
+}
+export default {itemTypeOptions, logTypeOptions, daysNumber, dateType};
