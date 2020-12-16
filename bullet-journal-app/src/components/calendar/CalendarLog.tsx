@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 type Props = { parentCallback: (data: string) => void };
@@ -7,7 +7,10 @@ const CalendarLog: React.FC<Props> = ({ parentCallback }) => {
   const changeSelectedDate = (date: any) => {
     setValue(date);
   };
-  parentCallback(value.toLocaleDateString());
+
+  useEffect(() => {
+    parentCallback(value.toLocaleDateString());
+  }, [value]);
   return <Calendar onChange={changeSelectedDate} value={value} />;
 };
 

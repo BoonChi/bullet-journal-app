@@ -32,9 +32,16 @@ for (let i = 1; i <= 31; i++) {
     daysNumber.push(i);
 }
 
+const monthNumber: number[] = []
+for (let i = 1; i <= 12; i++) {
+    monthNumber.push(i);
+}
+
+const yearNumber: number[] = [2020, 2021, 2022]
+
 const dateType = {
     "daily": "day",
     "monthly": "month",
     "future": "year"
 }
-export default {itemTypeOptions, logTypeOptions, daysNumber, dateType};
+export default {itemTypeOptions, logTypeOptions, daysNumber, dateType, monthNumber,yearNumber};

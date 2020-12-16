@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@types/react-calendar": "^3.1.2",
+    "mobx": "^6.0.4",
     "react-icons": "^4.1.0"
   }
 }

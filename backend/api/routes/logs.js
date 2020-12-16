@@ -32,7 +32,7 @@ router.get('/:type/:day/:month/:year', function (req, res, next) {
 });
 /* POST log listing. */
 router.post('/', function (req, res, next) {
-    logSchema.create({ type: req.body.type, details: req.body.details, duration: req.body.duration, mark: req.body.mark, itemType: req.body.itemType, day: req.body.day, month: req.body.month, year: req.body.year }, function (err, data) {
+    logSchema.create(req.body, function (err, data) {
         if (err) return handleError(err);
         // saved!
         data.save(function (err, logs) {

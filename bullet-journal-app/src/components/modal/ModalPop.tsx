@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "./ModalPop.css";
 import API from "../../utils/API";
 import Constant from "../../Constant";
-import { sign } from "crypto";
 
 type Props = {
   show?: boolean;
@@ -31,35 +30,7 @@ const ModalPop: React.FC<Props> = ({
   month,
   year,
 }) => {
-  const [dateOption, setDateOption] = useState([] as any);
-  const handleTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const data: number[] = [];
-    switch (event.currentTarget.value) {
-      case "daily":
-        //state day
-        for (let i = 1; i <= 31; i++) {
-          data.push(i);
-        }
-        setDateOption(data);
-        break;
-      case "monthly":
-        //state month
-        for (let i = 1; i <= 12; i++) {
-          data.push(i);
-        }
-        setDateOption(data);
-        break;
-      case "future":
-        //state year
-        data.push(2021);
-        data.push(2022);
-        data.push(2023);
-        setDateOption(data);
-        break;
-      default:
-      //state day
-    }
-  };
+  const handleTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {};
   const handleSubmit = async (e: React.SyntheticEvent) => {
     onSubmit && onSubmit();
     e.preventDefault();
@@ -72,7 +43,6 @@ const ModalPop: React.FC<Props> = ({
       month: { value: number };
       year: { value: number };
     };
-    console.log("target", target);
     if (!dataId) {
       //add
       await API.post("logs/", {
@@ -163,7 +133,7 @@ const ModalPop: React.FC<Props> = ({
               ))}
             </select>
           </div>
-          <div>
+          {/* <div>
             <label style={{ marginBottom: 10 }}>Set Date</label>
           </div>
           <div>
@@ -179,6 +149,44 @@ const ModalPop: React.FC<Props> = ({
                 : Constant.daysNumber.map((day: number) => (
                     <option value={day}>{day}</option>
                   ))}
+            </select>
+          </div> */}
+          <div>
+            <label style={{ marginBottom: 10 }}>Set Day</label>
+          </div>
+          <div>
+            <select style={{ marginBottom: 10 }} name="day" defaultValue={day}>
+              {Constant.daysNumber.map((day: number) => (
+                <option value={day}>{day}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label style={{ marginBottom: 10 }}>Set Month</label>
+          </div>
+          <div>
+            <select
+              style={{ marginBottom: 10 }}
+              name="month"
+              defaultValue={month}
+            >
+              {Constant.monthNumber.map((month: number) => (
+                <option value={month}>{month}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label style={{ marginBottom: 10 }}>Set Year</label>
+          </div>
+          <div>
+            <select
+              style={{ marginBottom: 10 }}
+              name="year"
+              defaultValue={year}
+            >
+              {Constant.yearNumber.map((year: number) => (
+                <option value={year}>{year}</option>
+              ))}
             </select>
           </div>
           <Button className="button" variant="primary" type="submit">

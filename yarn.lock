@@ -7,6 +7,11 @@
   resolved "https://registry.yarnpkg.com/@types/react-calendar/-/react-calendar-3.1.2.tgz#a8afe394aadd639cfee7f0441bc3ced4fa0092f3"
   integrity sha512-QZ8EMG2P3230GQNEMXtSJq8v8zJkJqs8xpbohMbBefYG7i1MX2YzOsDoBWF2dpq36mrkXpoNgmmeVnXIT0DYtw==
 
+mobx@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.0.4.tgz#8fc3e3629a3346f8afddf5bd954411974744dad1"
+  integrity sha512-wT2QJT9tW19VSHo9x7RPKU3z/I2Ps6wUS8Kb1OO+kzmg7UY3n4AkcaYG6jq95Lp1R9ohjC/NGYuT2PtuvBjhFg==
+
 react-icons@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.1.0.tgz#9ca9bcbf2e3aee8e86e378bb9d465842947bbfc3"
