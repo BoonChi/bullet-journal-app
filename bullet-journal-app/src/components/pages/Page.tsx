@@ -5,7 +5,6 @@ import ModalPop from "../modal/ModalPop";
 import capitaliseFirstLetter from "../../utils/commonFunction";
 import "./Page.css";
 import CalendarLog from "../calendar/CalendarLog";
-import ObservableTodoStore from "../../store/LogStore";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import API from "../../utils/API";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
@@ -108,6 +107,12 @@ const Page: React.FC<Props> = (props) => {
       ],
     });
   };
+  const addOperation = async (params: {}) => {
+    await API.post("logs/", params);
+  };
+  const updateOperation = async (params: {}) => {
+    await API.put("logs/", params);
+  };
   useEffect(() => {
     // GET request using axios inside useEffect React hook
     API.get("logs/" + props.type + "/" + currentDate)
@@ -136,6 +141,8 @@ const Page: React.FC<Props> = (props) => {
                 setShow(false);
                 setRefresh(true);
               }}
+              onLogAdd={addOperation}
+              onLogUpdate={updateOperation}
               type={props.type}
             ></ModalPop>
           ) : null}
@@ -165,6 +172,11 @@ const Page: React.FC<Props> = (props) => {
             dataId={editData?._id}
             type={editData?.type}
             itemType={editData?.itemType}
+            day={editData?.day}
+            month={editData?.month}
+            year={editData?.year}
+            onLogAdd={addOperation}
+            onLogUpdate={updateOperation}
           ></ModalPop>
         ) : null}
       </div>

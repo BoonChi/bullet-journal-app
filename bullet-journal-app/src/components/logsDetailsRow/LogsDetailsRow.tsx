@@ -2,6 +2,7 @@ import React from "react";
 import capitaliseFirstLetter from "../../utils/commonFunction";
 import { BsFillTrashFill } from "react-icons/bs";
 import { BiEdit, BiCheckCircle } from "react-icons/bi";
+import "./LogsDetailsRow.css";
 interface displayData {
   duration: number;
   details: string;
