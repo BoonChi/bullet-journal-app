@@ -54,14 +54,10 @@ const LogForm: React.FC<Props> = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label style={{ marginBottom: 10 }}>Item types</label>
+        <label>Item types</label>
       </div>
       <div>
-        <select
-          style={{ marginBottom: 10 }}
-          name="itemType"
-          defaultValue={props.itemType}
-        >
+        <select name="itemType" defaultValue={props.itemType}>
           {Constant.itemTypeOptions.map((itemTypeOption) => (
             <option value={itemTypeOption.value}>{itemTypeOption.label}</option>
           ))}
@@ -78,12 +74,11 @@ const LogForm: React.FC<Props> = (props) => {
         <input type="number" name="duration" defaultValue={props.duration} />
       </div>
       <div>
-        <label style={{ marginTop: 10 }}>Log types</label>
+        <label>Log types</label>
       </div>
 
       <div>
         <select
-          style={{ marginBottom: 10 }}
           name="type"
           defaultValue={props.type}
           onChange={logTypeSelector}

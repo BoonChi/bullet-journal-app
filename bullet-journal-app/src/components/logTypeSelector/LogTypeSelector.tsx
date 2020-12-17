@@ -50,12 +50,8 @@ const LogTypeSelector: React.FC<Props> = (props) => {
     <div>
       {displayDay ? (
         <div>
-          <label style={{ marginBottom: 10 }}>Set Day</label>
-          <select
-            style={{ marginBottom: 10 }}
-            name="day"
-            defaultValue={props.day}
-          >
+          <label>Set Day</label>
+          <select name="day" defaultValue={props.day}>
             {Constant.daysNumber.map((day: number) => (
               <option value={day}>{day}</option>
             ))}
@@ -64,12 +60,8 @@ const LogTypeSelector: React.FC<Props> = (props) => {
       ) : null}
       {displayMonth ? (
         <div>
-          <label style={{ marginBottom: 10 }}>Set Month</label>
-          <select
-            style={{ marginBottom: 10 }}
-            name="month"
-            defaultValue={props.month}
-          >
+          <label>Set Month</label>
+          <select name="month" defaultValue={props.month}>
             {Constant.monthNumber.map((month: number) => (
               <option value={month}>{month}</option>
             ))}
@@ -78,12 +70,8 @@ const LogTypeSelector: React.FC<Props> = (props) => {
       ) : null}
       {displayYear ? (
         <div>
-          <label style={{ marginBottom: 10 }}>Set Year</label>
-          <select
-            style={{ marginBottom: 10 }}
-            name="year"
-            defaultValue={props.year}
-          >
+          <label>Set Year</label>
+          <select name="year" defaultValue={props.year}>
             {Constant.yearNumber.map((year: number) => (
               <option value={year}>{year}</option>
             ))}
