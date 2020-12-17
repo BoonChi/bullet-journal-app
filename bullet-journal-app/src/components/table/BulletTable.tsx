@@ -48,7 +48,7 @@ const BulletTable: React.FC<Props> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.tableData.map((row: displayData) => (
+          {props.tableData?.map((row: displayData) => (
             <LogsDetailsRow
               logType={props.logType}
               logDetailRow={row}

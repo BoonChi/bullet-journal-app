@@ -35,8 +35,9 @@ const LogsDetailsRow: React.FC<Props> = (props) => {
         </td>
       ) : null}
       <td>
-        {props.logDetailRow.day}/{props.logDetailRow.month}/
-        {props.logDetailRow.year}
+        {props.logDetailRow.day ? props.logDetailRow.day + "/" : null}
+        {props.logDetailRow.month ? props.logDetailRow.month + "/" : null}
+        {props.logDetailRow.year ? props.logDetailRow.year : null}
       </td>
       <td>{capitaliseFirstLetter(props.logDetailRow.type)} Log</td>
       <td>{props.logDetailRow.details}</td>

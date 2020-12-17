@@ -4,26 +4,32 @@ const mongoose = require('mongoose');
 const logSchema = require("../models/logSchema")
 mongoose.connect('mongodb://admin:password@localhost:27017/mydb?authSource=admin', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 console.log(mongoose.connection.readyState);
-/* GET all log listing. */
-router.get('/', function (req, res, next) {
-    logSchema.find({})
-        .exec(function (err, logs) {
-            if (err) {
-                console.log(err);
-                res.json(err);
-            } else {
-                res.json(logs);
-            }
-        });
-});
 
 /* GET specific log listing. */
-router.get('/:type/:day/:month/:year', function (req, res, next) {
-    console.log(req.params)
-    logSchema.find(req.params)
+router.get('/:type', function (req, res, next) {
+    let searchQuery = {
+        ...req.params,
+        day: "",
+        month: "",
+        year: ""
+    }
+    switch (req.params.type) {
+        case "daily":
+            searchQuery.day = req.query.currentDate.split('/')[0]
+            searchQuery.month = req.query.currentDate.split('/')[1]
+            searchQuery.year = req.query.currentDate.split('/')[2]
+            break;
+        case "monthly":
+            searchQuery.month = req.query.currentDate.split('/')[0]
+            searchQuery.year = req.query.currentDate.split('/')[1]
+            break;
+        case "future":
+            searchQuery.year = req.query.currentDate
+            break;
+    }
+    logSchema.find(searchQuery)
         .exec(function (err, logs) {
             if (err) {
-                console.log(err);
                 res.json(err);
             } else {
                 res.json(logs);
@@ -53,7 +59,7 @@ router.delete('/', function (req, res, next) {
 /* edit log. */
 router.put('/', function (req, res, next) {
     let update = null
-    if (req.body.details && req.body.type) {
+    if (req.body.type) {
         update = {
             details: req.body.details,
             duration: req.body.duration,

@@ -9,7 +9,7 @@ var logSchema = new Schema({
     itemType: String,
     day: Number,
     month: Number,
-    year: Number
+    year: Number,
 }, { collection: 'bulletJournal' });
 
 module.exports = mongoose.model('log', logSchema);

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import Constant from "../../Constant";
+import LogTypeSelector from "../logTypeSelector/LogTypeSelector";
 type Props = {
   show?: boolean;
   onHide?: () => void;
@@ -16,6 +17,10 @@ type Props = {
   onLogUpdate: (log: any) => void;
 };
 const LogForm: React.FC<Props> = (props) => {
+  const [logType, setLogType] = useState("");
+  const logTypeSelector = (event: ChangeEvent<HTMLSelectElement>) => {
+    setLogType(event.currentTarget.value);
+  };
   const handleSubmit = async (e: React.SyntheticEvent) => {
     props.onSubmit && props.onSubmit();
     e.preventDefault();
@@ -81,54 +86,20 @@ const LogForm: React.FC<Props> = (props) => {
           style={{ marginBottom: 10 }}
           name="type"
           defaultValue={props.type}
+          onChange={logTypeSelector}
         >
           {Constant.logTypeOptions.map((logTypeOption) => (
             <option value={logTypeOption.value}>{logTypeOption.label}</option>
           ))}
         </select>
       </div>
-      <div>
-        <label style={{ marginBottom: 10 }}>Set Day</label>
-      </div>
-      <div>
-        <select
-          style={{ marginBottom: 10 }}
-          name="day"
-          defaultValue={props.day}
-        >
-          {Constant.daysNumber.map((day: number) => (
-            <option value={day}>{day}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label style={{ marginBottom: 10 }}>Set Month</label>
-      </div>
-      <div>
-        <select
-          style={{ marginBottom: 10 }}
-          name="month"
-          defaultValue={props.month}
-        >
-          {Constant.monthNumber.map((month: number) => (
-            <option value={month}>{month}</option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label style={{ marginBottom: 10 }}>Set Year</label>
-      </div>
-      <div>
-        <select
-          style={{ marginBottom: 10 }}
-          name="year"
-          defaultValue={props.year}
-        >
-          {Constant.yearNumber.map((year: number) => (
-            <option value={year}>{year}</option>
-          ))}
-        </select>
-      </div>
+      <LogTypeSelector
+        day={props.day}
+        month={props.month}
+        year={props.year}
+        logTypeSelected={logType}
+        defaultLogType={props.type}
+      ></LogTypeSelector>
       <button className="button" type="submit">
         {props.dataId ? "EDIT" : "ADD"}
       </button>

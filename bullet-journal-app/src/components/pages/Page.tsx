@@ -7,7 +7,7 @@ import "./Page.css";
 import CalendarLog from "../calendar/CalendarLog";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import API from "../../utils/API";
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import "react-confirm-alert/src/react-confirm-alert.css";
 interface displayData {
   duration: number;
   details: string;
@@ -46,6 +46,7 @@ const Page: React.FC<Props> = (props) => {
     setShow(true);
   };
   const getSelectedDate = (data: string) => {
+    console.log("getSelectedDate", data);
     setCurrentDate(data);
   };
   const editOperation = (dataPassed: displayData) => {
@@ -113,18 +114,21 @@ const Page: React.FC<Props> = (props) => {
   const updateOperation = async (params: {}) => {
     await API.put("logs/", params);
   };
+  const currentDateNotEmpty = currentDate !== "";
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    API.get("logs/" + props.type + "/" + currentDate)
-      .then((response) => {
-        console.log("callbackend", response.data);
-        setResponseData(response.data);
-      })
-      .then(() => {
-        setLoading(false);
-        setRefresh(false);
-      });
-  }, [loading, refresh, props.type, currentDate]);
+    console.log(loading, refresh, props.type, currentDate);
+    if (currentDateNotEmpty)
+      API.get("logs/" + props.type + "?currentDate=" + currentDate)
+        .then((response) => {
+          console.log("callbackend", response.data, currentDate);
+          setResponseData(response.data);
+        })
+        .then(() => {
+          setLoading(false);
+          setRefresh(false);
+        });
+  }, [loading, refresh, currentDate]);
   return (
     <div>
       <div className="headerBar">
@@ -149,7 +153,10 @@ const Page: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className="row">
-        <CalendarLog parentCallback={getSelectedDate}></CalendarLog>
+        <CalendarLog
+          parentCallback={getSelectedDate}
+          type={props.type}
+        ></CalendarLog>
         <BulletTable
           logType={props.type}
           onLogEdit={editOperation}
