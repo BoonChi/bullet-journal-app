@@ -6,19 +6,8 @@ import capitaliseFirstLetter from "../../utils/commonFunction";
 import "./LogDisplay.css";
 import CalendarLog from "../calendar/CalendarLog";
 import { confirmAlert } from "react-confirm-alert"; // Import
-import API from "../../utils/API";
+import API, { Log } from "../../utils/API";
 import "react-confirm-alert/src/react-confirm-alert.css";
-interface displayData {
-  duration: number;
-  details: string;
-  _id: string;
-  type: "daily" | "monthly" | "future";
-  mark: Boolean;
-  itemType: string;
-  day: number;
-  month: number;
-  year: number;
-}
 type Props = {
   type: "daily" | "monthly" | "future";
 };
@@ -46,19 +35,14 @@ const LogDisplay: React.FC<Props> = (props) => {
     setShow(true);
   };
   const getSelectedDate = (data: string) => {
-    console.log("getSelectedDate", data);
     setCurrentDate(data);
   };
-  const editOperation = (dataPassed: displayData) => {
+  const editOperation = (dataPassed: Log) => {
     setEditData(dataPassed);
     setShowEdit(true);
   };
-  const deleteData = async (param: string) => {
-    await API.delete("logs/", { data: { id: param } })
-      .then(function (response) {})
-      .catch(function (error) {
-        console.log(error);
-      });
+  const deleteData = async (logId: string) => {
+    API.deleteLog(logId);
   };
   const deleteOperation = (param: string) => {
     //confirm delete?
@@ -81,13 +65,10 @@ const LogDisplay: React.FC<Props> = (props) => {
       ],
     });
   };
-  const markData = async (param: displayData) => {
-    await API.put("logs/", {
-      mark: !param.mark,
-      id: param._id,
-    });
+  const markData = async (log: Log) => {
+    API.updateLogwithMark(log);
   };
-  const markOperation = (param: displayData) => {
+  const markOperation = (param: Log) => {
     let title = "null";
     !param.mark ? (title = "Mark as done") : (title = "Mark as undone");
     confirmAlert({
@@ -108,20 +89,18 @@ const LogDisplay: React.FC<Props> = (props) => {
       ],
     });
   };
-  const addOperation = async (params: {}) => {
-    await API.post("logs/", params);
+  const addOperation = async (log: Log) => {
+    API.addLog(log);
   };
-  const updateOperation = async (params: {}) => {
-    await API.put("logs/", params);
+  const updateOperation = async (log: Log) => {
+    API.updateLog(log);
   };
   const currentDateNotEmpty = currentDate !== "";
   useEffect(() => {
     // GET request using axios inside useEffect React hook
-    console.log(loading, refresh, props.type, currentDate);
     if (currentDateNotEmpty)
-      API.get("logs/" + props.type + "?currentDate=" + currentDate)
+      API.getLog(props.type, currentDate)
         .then((response) => {
-          console.log("callbackend", response.data, currentDate);
           setResponseData(response.data);
         })
         .then(() => {

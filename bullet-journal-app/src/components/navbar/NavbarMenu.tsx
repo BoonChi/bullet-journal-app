@@ -25,9 +25,9 @@ const NavbarMenu: React.FC = (props) => {
     <Router>
       <div>
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand to="/" activeClassName="active" exact tag={RRNavLink}>
+          {/* <NavbarBrand to="/" activeClassName="active" exact tag={RRNavLink}>
             Logs
-          </NavbarBrand>
+          </NavbarBrand> */}
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
