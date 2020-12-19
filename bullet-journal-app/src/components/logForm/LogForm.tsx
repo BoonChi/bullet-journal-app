@@ -15,6 +15,7 @@ type Props = {
   year?: number;
   onLogAdd: (log: any) => void;
   onLogUpdate: (log: any) => void;
+  actionTitle?: string;
 };
 const LogForm: React.FC<Props> = (props) => {
   const [logType, setLogType] = useState("");
@@ -96,7 +97,7 @@ const LogForm: React.FC<Props> = (props) => {
         defaultLogType={props.type}
       ></LogTypeSelector>
       <button className="button" type="submit">
-        {props.dataId ? "EDIT" : "ADD"}
+        {props.actionTitle}
       </button>
     </form>
   );

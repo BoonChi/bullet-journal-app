@@ -16,7 +16,7 @@ import {
   Switch,
   NavLink as RRNavLink,
 } from "react-router-dom";
-import Page from "../pages/Page";
+import LogDisplay from "../logDisplay/LogDisplay";
 const NavbarMenu: React.FC = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,17 +64,14 @@ const NavbarMenu: React.FC = (props) => {
         </Navbar>
         <Switch>
           <Route path="/dailyLog">
-            <Page type="daily" />
+            <LogDisplay type="daily" />
           </Route>
           <Route path="/monthlyLog">
-            <Page type="monthly" />
+            <LogDisplay type="monthly" />
           </Route>
           <Route path="/futureLog">
-            <Page type="future" />
+            <LogDisplay type="future" />
           </Route>
-          {/* <Route exact path="/">
-            <Page type="" />
-          </Route> */}
         </Switch>
       </div>
     </Router>

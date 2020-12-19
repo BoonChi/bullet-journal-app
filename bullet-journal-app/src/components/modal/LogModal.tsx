@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import "./ModalPop.css";
+import "./LogModal.css";
 import LogForm from "../logForm/LogForm";
 
 type Props = {
@@ -17,8 +17,9 @@ type Props = {
   year?: number;
   onLogAdd: (log: any) => void;
   onLogUpdate: (log: any) => void;
+  actionTitle?: string;
 };
-const ModalPop: React.FC<Props> = (props) => {
+const LogModal: React.FC<Props> = (props) => {
   return (
     <Modal
       show={props.show}
@@ -27,7 +28,7 @@ const ModalPop: React.FC<Props> = (props) => {
       keyboard={false}
     >
       <Modal.Header closeButton onClick={props.onHide}>
-        <Modal.Title>{props.dataId ? "EDIT LOG" : "ADD LOG"}</Modal.Title>
+        <Modal.Title>{props.actionTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <LogForm
@@ -42,6 +43,7 @@ const ModalPop: React.FC<Props> = (props) => {
           onLogAdd={props.onLogAdd}
           onSubmit={props.onSubmit}
           onLogUpdate={props.onLogUpdate}
+          actionTitle={props.actionTitle}
         ></LogForm>
       </Modal.Body>
       <Modal.Footer></Modal.Footer>
@@ -49,4 +51,4 @@ const ModalPop: React.FC<Props> = (props) => {
   );
 };
 
-export default ModalPop;
+export default LogModal;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import BulletTable from "../table/BulletTable";
 import { FaCalendarPlus } from "react-icons/fa";
-import ModalPop from "../modal/ModalPop";
+import LogModal from "../modal/LogModal";
 import capitaliseFirstLetter from "../../utils/commonFunction";
-import "./Page.css";
+import "./LogDisplay.css";
 import CalendarLog from "../calendar/CalendarLog";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import API from "../../utils/API";
@@ -22,7 +22,7 @@ interface displayData {
 type Props = {
   type: "daily" | "monthly" | "future";
 };
-const Page: React.FC<Props> = (props) => {
+const LogDisplay: React.FC<Props> = (props) => {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   let [editData, setEditData] = useState({
@@ -138,7 +138,7 @@ const Page: React.FC<Props> = (props) => {
         <div className="addNew">
           <FaCalendarPlus onClick={handleOpen} />
           {show ? (
-            <ModalPop
+            <LogModal
               show={show}
               onHide={handleClose}
               onSubmit={() => {
@@ -148,7 +148,8 @@ const Page: React.FC<Props> = (props) => {
               onLogAdd={addOperation}
               onLogUpdate={updateOperation}
               type={props.type}
-            ></ModalPop>
+              actionTitle="ADD LOG"
+            ></LogModal>
           ) : null}
         </div>
       </div>
@@ -167,7 +168,7 @@ const Page: React.FC<Props> = (props) => {
       </div>
       <div>
         {showEdit ? (
-          <ModalPop
+          <LogModal
             show={showEdit}
             onHide={() => setShowEdit(false)}
             onSubmit={() => {
@@ -184,11 +185,12 @@ const Page: React.FC<Props> = (props) => {
             year={editData?.year}
             onLogAdd={addOperation}
             onLogUpdate={updateOperation}
-          ></ModalPop>
+            actionTitle="EDIT LOG"
+          ></LogModal>
         ) : null}
       </div>
     </div>
   );
 };
 
-export default Page;
+export default LogDisplay;
