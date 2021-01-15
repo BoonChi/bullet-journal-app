@@ -28,7 +28,8 @@
     "reactstrap": "^8.7.1",
     "shards-react": "^1.0.3",
     "typescript": "~4.0.5",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "start": "react-scripts start",
