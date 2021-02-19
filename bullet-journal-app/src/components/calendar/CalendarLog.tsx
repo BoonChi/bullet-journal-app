@@ -39,13 +39,13 @@ const CalendarLog: React.FC<Props> = (props) => {
         <Calendar className="middle" onChange={changeSelectedDate} value={value} />
       ) : null}
       {props.type === "monthly" ? (
-        <div className="margin-left-45">
-          <select onChange={changeSelectedMonth} value={month}>
+        <div className="row" style={{float:'right'}} >
+          <select className="form-select" onChange={changeSelectedMonth} value={month}>
             {Constant.monthNumber.map((month: number) => (
               <option value={month}>{month}</option>
             ))}
           </select>
-          <select onChange={changeSelectedYear} value={year}>
+          <select  className="form-select" onChange={changeSelectedYear} value={year}>
             {Constant.yearNumber.map((year: number) => (
               <option value={year}>{year}</option>
             ))}
@@ -53,7 +53,7 @@ const CalendarLog: React.FC<Props> = (props) => {
         </div>
       ) : null}
       {props.type === "future" ? (
-        <select className="margin-left-45" onChange={changeSelectedYear} defaultValue={year}>
+        <select style={{float:'right'}} className="form-select" onChange={changeSelectedYear} defaultValue={year}>
           {Constant.yearNumber.map((year: number) => (
             <option value={year}>{year}</option>
           ))}

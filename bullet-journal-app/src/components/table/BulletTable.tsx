@@ -36,7 +36,7 @@ const BulletTable: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <Table>
+      <Table className="table-striped table-hover">
         <thead>
           <tr>
             <th>Type</th>
