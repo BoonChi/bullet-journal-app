@@ -30,17 +30,16 @@ const CalendarLog: React.FC<Props> = (props) => {
         return props.parentCallback(year);
     }
   };
-  console.log("props", value, month, year);
   useEffect(() => {
     checkPropType();
   }, [value, month, year, props.type]);
   return (
-    <div>
+    <div> 
       {props.type === "daily" ? (
-        <Calendar onChange={changeSelectedDate} value={value} />
+        <Calendar className="middle" onChange={changeSelectedDate} value={value} />
       ) : null}
       {props.type === "monthly" ? (
-        <div>
+        <div className="margin-left-45">
           <select onChange={changeSelectedMonth} value={month}>
             {Constant.monthNumber.map((month: number) => (
               <option value={month}>{month}</option>
@@ -54,7 +53,7 @@ const CalendarLog: React.FC<Props> = (props) => {
         </div>
       ) : null}
       {props.type === "future" ? (
-        <select onChange={changeSelectedYear} defaultValue={year}>
+        <select className="margin-left-45" onChange={changeSelectedYear} defaultValue={year}>
           {Constant.yearNumber.map((year: number) => (
             <option value={year}>{year}</option>
           ))}

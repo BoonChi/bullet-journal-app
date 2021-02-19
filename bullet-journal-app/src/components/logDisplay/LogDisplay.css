@@ -24,3 +24,16 @@
   flex-wrap: nowrap;
   margin-left: 2px;
 }
+
+.middle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dark-background {
+  background-color: black;
+}
+
+.margin-left-45 {
+  margin-left: 45%;
+}

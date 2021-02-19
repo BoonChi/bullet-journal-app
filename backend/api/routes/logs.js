@@ -15,8 +15,8 @@ router.get('/:type', function (req, res, next) {
     }
     switch (req.params.type) {
         case "daily":
-            searchQuery.day = req.query.currentDate.split('/')[0]
-            searchQuery.month = req.query.currentDate.split('/')[1]
+            searchQuery.day = req.query.currentDate.split('/')[1]
+            searchQuery.month = req.query.currentDate.split('/')[0]
             searchQuery.year = req.query.currentDate.split('/')[2]
             break;
         case "monthly":

@@ -132,11 +132,13 @@ const LogDisplay: React.FC<Props> = (props) => {
           ) : null}
         </div>
       </div>
-      <div className="row">
+      <div className="dark-background">
         <CalendarLog
           parentCallback={getSelectedDate}
           type={props.type}
         ></CalendarLog>
+      </div>
+      <div>
         <BulletTable
           logType={props.type}
           onLogEdit={editOperation}
